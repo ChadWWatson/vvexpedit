@@ -13,12 +13,15 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"start": "node app.js",
-		"dev": "cross-env NODE_ENV=DEVELOPMENT nodemon app.js"
+		"server": "cross-env NODE_ENV=DEVELOPMENT nodemon app.js",
+		"client": "npm run start --prefix client",
+		"dev": "concurrently \"npm run server\" \"npm run client\""
 	},
 	"author": "",
 	"license": "MIT",
 	"devDependencies": {
 		"body-parser": "^1.15.2",
+		"concurrently": "^3.5.0",
 		"cross-env": "^5.1.1",
 		"disconnect": "^1.0.2",
 		"dotenv": "^4.0.0",
