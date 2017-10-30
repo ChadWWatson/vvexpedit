@@ -13,7 +13,7 @@ exports.search = async (req, res, next) => {
 		const { q } = req.query;
 		const page = req.query.page ? req.query.page : 1;
 		var results = await DiscogService.search(q, page);
-		res.render('results', { results, q });
+		res.json(results);
 	} catch (error) {
 		next(error);
 	}
@@ -23,7 +23,7 @@ exports.getReleaseDetails = async (req, res, next) => {
 	try {
 		const { id } = req.params;
 		var releaseDetails = await DiscogService.getReleaseDetails(id);
-		res.render('release', details);
+		res.json(details);
 	} catch (error) {
 		next(error);
 	}
@@ -33,7 +33,7 @@ exports.getMasterDetails = async (req, res, next) => {
 	try {
 		const { id } = req.params;
 		var masterDetails = await DiscogService.getMasterDetails(id);
-		res.render('master', masterDetails);
+		res.json(masterDetails);
 	} catch (error) {
 		next(error);
 	}
@@ -43,7 +43,7 @@ exports.getArtistDetails = async (req, res, next) => {
 	try {
 		const { id } = req.params;
 		var artist = await DiscogService.getArtist(id);
-		res.render('artist', artist);
+		res.json(artist);
 	} catch (error) {
 		next(error);
 	}
@@ -54,7 +54,7 @@ exports.getCollectionFolders = async (req, res, next) => {
 	try {
 		const accountData = await DiscogService.getCollectionFolders(req);
 		const { data, collectionFolders } = accountData;
-		res.render('folders', { data, folders: collectionFolders.folders });
+		res.json({ data, folders: collectionFolders.folders });
 	} catch (error) {
 		next(error);
 	}
@@ -64,7 +64,7 @@ exports.getFolder = async (req, res, next) => {
 	try {
 		var folder = await DiscogService.getFolder(req.session.discogsAccount, req.params.id);
 		const { releases } = folder;
-		res.render('folder', { releases });
+		res.json(releases);
 	} catch (error) {
 		next(error);
 	}

@@ -19,7 +19,7 @@ class DiscogService {
 
 	/**
    * This returns Promise of array of results for given query and page from DiscogAPI
-   * 
+   *
    * @param {string} q - Query
    * @param {number} page - Page Number
    * @returns {Object[]} results
@@ -28,6 +28,7 @@ class DiscogService {
 		try {
 			const options = { type: [ 'artist' ], page, per_page: 10 };
 			const results = await this.db.search(q, options);
+			console.log(results);
 			return results;
 		} catch (error) {
 			throw error;
@@ -47,10 +48,10 @@ class DiscogService {
 
 	/**
    * Gets details of album by id
-   * 
+   *
    * @param {string} id Id of album
    * @returns {Object} Details of album
-   * 
+   *
    */
 	async getReleaseDetails(id) {
 		try {

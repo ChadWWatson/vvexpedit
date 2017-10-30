@@ -15,6 +15,7 @@ require('./models/User')
 const expressValidator = require('express-validator')
 const routes = require('./routes/index')
 const statusRouter = require('./routes/status')
+const discogRouter = require('./routes/discog')
 const flash = require('connect-flash')
 const HOST = process.env.HOST || '0.0.0.0'
 const PORT = process.env.PORT || 4444
@@ -26,6 +27,7 @@ mongoose.connection.on('error', (err) => {
 })
 
 app = express()
+app.use(express.static(path.join(__dirname, 'client/build')));
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
 
@@ -48,7 +50,12 @@ app.use(
 app.use(require('./middlewares/flash'))
 
 app.use('/api/status', statusRouter)
-app.use('/', routes)
+app.use('/api/discog', discogRouter)
+
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname+'/client/build/index.html'));
+})
+//app.use('/', routes)
 
 app.listen(PORT, HOST, err => {
 	console.log(`Application Started on http://${HOST}:${PORT}`)
